@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="col-sm-8">
                     <div class="singin-header-btn">
                         <p>Not a member?</p>
-                        <a href="sign-up.php" class="axil-btn sign-up-btn">Sign Up</a>
+                        <a href="register.php" class="axil-btn sign-up-btn">Register</a>
                     </div>
                 </div>
             </div>

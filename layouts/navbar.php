@@ -98,7 +98,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <div class="login-btn">
                                 <a href="sign-in.php" class="axil-btn btn-bg-primary">Login</a>
                             </div>
-                            <div class="reg-footer text-center">No account yet? <a href="sign-up.php" class="btn-link">REGISTER HERE.</a></div>
+                            <div class="reg-footer text-center">No account yet? <a href="register.php" class="btn-link">REGISTER HERE.</a></div>
                         </div>
                     </li>
                     <li class="axil-mobile-toggle">
