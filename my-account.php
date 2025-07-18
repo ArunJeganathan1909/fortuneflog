@@ -4,6 +4,7 @@ include 'layouts/header.php';
 
 <link rel="stylesheet" href="assets/css/add-product.css">
 
+
 <main class="main-wrapper">
     <!-- Start Breadcrumb Area  -->
     <div class="axil-breadcrumb-area">
@@ -127,7 +128,7 @@ include 'layouts/header.php';
                                 <div class="axil-dashboard-order">
                                     <div class="container card shadow-lg p-4 mt-4">
                                         <div class="text-center mb-4">
-                                            <h4 class="modal-title fw-bold text-primary">Add Product</h4>
+                                            <h4 class="modal-title fw-bold ">Add Product</h4>
                                             <p class="text-muted">Fill in the form below to add a new product</p>
                                         </div>
 
@@ -135,53 +136,80 @@ include 'layouts/header.php';
                                             <!-- Product Title -->
                                             <div class="form-group">
                                                 <label for="pTitle" class="form-label fw-semibold">Product Title</label>
-                                                <input type="text" name="pTitle" id="pTitle" class="form-control shadow-sm border-primary" placeholder="Enter product title" required>
+                                                <input type="text" name="pTitle" id="pTitle" class="form-control shadow-sm " placeholder="Enter product title" required>
                                             </div>
 
                                             <!-- Product Images -->
                                             <div class="form-group">
-                                                <label for="pImages" class="form-label fw-semibold">Product Images</label>
-                                                <input type="file" name="pImages[]" id="pImages" class="form-control shadow-sm border-primary" accept="image/*" multiple required>
-                                                <small class="text-muted">You can upload multiple images</small>
+                                                <label class="form-label fw-semibold">Product Images</label>
+
+                                                <!-- Initial Image Input -->
+                                                <div id="image-inputs">
+                                                    <div class="input-group mb-2">
+                                                        <input type="file" name="pImages[]" class="form-control shadow-sm " accept="image/*" required>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Plus Icon Button -->
+                                                <button type="button" id="addMoreImages" class="btn btn-sm">
+                                                    <i class="fas fa-plus"></i> Add More Images
+                                                </button>
+
+                                                <small class="text-muted d-block mt-1">You can upload multiple images</small>
                                             </div>
+
 
                                             <!-- Description -->
                                             <div class="form-group">
                                                 <label for="pDescription" class="form-label fw-semibold">Product Description</label>
-                                                <textarea name="pDescription" id="pDescription" class="form-control shadow-sm border-primary" rows="3" placeholder="Enter product description" required></textarea>
+                                                <textarea name="pDescription" id="pDescription" class="form-control shadow-sm" rows="3" placeholder="Enter product description" required></textarea>
                                             </div>
 
                                             <!-- Price -->
                                             <div class="form-group">
                                                 <label for="pPrice" class="form-label fw-semibold">Product Price ($)</label>
-                                                <input type="number" name="pPrice" id="pPrice" class="form-control shadow-sm border-primary" placeholder="Enter product price" step="0.01" required>
+                                                <input type="number" name="pPrice" id="pPrice" class="form-control shadow-sm" placeholder="Enter product price" step="0.01" required>
                                             </div>
 
                                             <!-- Age -->
                                             <div class="form-group">
                                                 <label for="pAge" class="form-label fw-semibold">Product Age (years)</label>
-                                                <input type="number" name="pAge" id="pAge" class="form-control shadow-sm border-primary" placeholder="Enter product age" required>
+                                                <input type="number" name="pAge" id="pAge" class="form-control shadow-sm" placeholder="Enter product age" required>
                                             </div>
 
                                             <!-- Type -->
                                             <div class="form-group">
                                                 <label for="pType" class="form-label fw-semibold">Product Type</label>
-                                                <select name="pType" id="pType" class="form-control shadow-sm border-primary" required>
+                                                <select name="pType" id="pType" class="form-control shadow-sm" required>
+                                                    <option value="Decorative">Decorative</option>
+                                                    <option value="Electronics">Electronics</option>
                                                     <option value="Antique">Antique</option>
                                                     <option value="Retro">Retro</option>
                                                 </select>
                                             </div>
 
+                                            <!-- Contact Name -->
+                                            <div class="form-group">
+                                                <label for="pContactName" class="form-label fw-semibold">Contact Name</label>
+                                                <input type="text" name="pContactName" id="pContactName" class="form-control shadow-sm" placeholder="Enter contact name" required>
+                                            </div>
+
+                                            <!-- Contact Address -->
+                                            <div class="form-group">
+                                                <label for="pContactAddress" class="form-label fw-semibold">Contact Address</label>
+                                                <input type="text" name="pContactAddress" id="pContactAddress" class="form-control shadow-sm" placeholder="Enter contact address" required>
+                                            </div>
+
                                             <!-- Contact Email -->
                                             <div class="form-group">
                                                 <label for="pEmail" class="form-label fw-semibold">Contact Email</label>
-                                                <input type="email" name="pEmail" id="pEmail" class="form-control shadow-sm border-primary" placeholder="example@domain.com" required>
+                                                <input type="email" name="pEmail" id="pEmail" class="form-control shadow-sm" placeholder="example@domain.com" required>
                                             </div>
 
                                             <!-- Contact Phone -->
                                             <div class="form-group mb-4">
                                                 <label for="pPhone" class="form-label fw-semibold">Contact Phone</label>
-                                                <input type="text" name="pPhone" id="pPhone" class="form-control shadow-sm border-primary" placeholder="+94 77 123 4567" required>
+                                                <input type="text" name="pPhone" id="pPhone" class="form-control shadow-sm" placeholder="+94 77 123 4567" required>
                                             </div>
 
                                             <!-- Submit -->
@@ -365,3 +393,22 @@ include 'layouts/header.php';
 <?php
 include 'layouts/footer.php';
 ?>
+
+<script>
+    document.getElementById('addMoreImages').addEventListener('click', function() {
+        const container = document.getElementById('image-inputs');
+
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('input-group', 'mb-2');
+
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.name = 'pImages[]';
+        input.accept = 'image/*';
+        input.classList.add('form-control', 'shadow-sm');
+        input.required = true;
+
+        wrapper.appendChild(input);
+        container.appendChild(wrapper);
+    });
+</script>

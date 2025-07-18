@@ -28,29 +28,39 @@
                                     $products = [
                                         [
                                             'title' => 'Vintage Vase',
-                                            'images' => ['assets/images/products/vase1.jpg', 'assets/images/products/vase2.jpeg'],
+                                            'images' => [
+                                                'assets/images/products/vase1.jpg',
+                                                'assets/images/products/vase2.jpeg'
+                                            ],
                                             'description' => 'Beautiful antique ceramic vase from the 1800s.',
                                             'price' => '$120',
                                             'age' => '145 years',
                                             'type' => 'Decorative',
                                             'contact' => [
+                                                'name' => 'Arun',
+                                                'address' => 'No. 123, Heritage Lane, Colombo, Sri Lanka',
                                                 'email' => 'vintage@example.com',
                                                 'phone' => '+94 77 123 4567'
                                             ]
                                         ],
                                         [
                                             'title' => 'Classic Typewriter',
-                                            'images' => ['assets/images/products/typewriter1.jpg'],
+                                            'images' => [
+                                                'assets/images/products/typewriter1.jpg'
+                                            ],
                                             'description' => 'Fully functional vintage typewriter.',
                                             'price' => '$250',
                                             'age' => '85 years',
                                             'type' => 'Electronics',
                                             'contact' => [
+                                                'name' => 'Shareeq',
+                                                'address' => 'No. 45, Retro Street, Kandy, Sri Lanka',
                                                 'email' => 'classic@example.com',
                                                 'phone' => '+94 71 987 6543'
                                             ]
                                         ]
                                     ];
+
 
                                     // Render each row
                                     foreach ($products as $index => $product): ?>
@@ -58,7 +68,8 @@
                                             <td><?= htmlspecialchars($product['title']) ?></td>
                                             <td>
                                                 <?php foreach ($product['images'] as $img): ?>
-                                                    <img src="<?= $img ?>" alt="Product Image" class="img-thumbnail m-1 preview-image" style="width: 60px; height: 60px; object-fit: cover; cursor: pointer;"
+                                                    <img src="<?= $img ?>" alt="Product Image" class="img-thumbnail m-1 preview-image"
+                                                        style="width: 60px; height: 60px; object-fit: cover; cursor: pointer;"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#imageModal"
                                                         data-image="<?= $img ?>"
@@ -71,10 +82,11 @@
                                             <td><?= htmlspecialchars($product['age']) ?></td>
                                             <td><?= htmlspecialchars($product['type']) ?></td>
                                             <td>
+                                                <?= htmlspecialchars($product['contact']['name']) ?><br>
+                                                <?= htmlspecialchars($product['contact']['address']) ?><br>
                                                 <?= htmlspecialchars($product['contact']['email']) ?><br>
                                                 <?= htmlspecialchars($product['contact']['phone']) ?>
                                             </td>
-
                                             <td>
                                                 <form action="backend/delete_product.php" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                                     <input type="hidden" name="product_id" value="<?= $index ?>">
