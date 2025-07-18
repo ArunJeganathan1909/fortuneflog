@@ -32,7 +32,7 @@
         <div class="signin-header">
             <div class="row align-items-center">
                 <div class="col-sm-4">
-                    <a href="index.html" class="site-logo"><img src="./assets/images/logo/logo.png" alt="logo"></a>
+                    <a href="index.php" class="site-logo"><img src="./assets/images/logo/logo.png" alt="logo"></a>
                 </div>
                 <div class="col-sm-8">
                     <div class="singin-header-btn">
@@ -55,7 +55,7 @@
                 <div class="axil-signin-form-wrap">
                     <div class="axil-signin-form">
                         <h3 class="title">I’m new here and excited to get started.</h3>
-                        <p class="b2 mb--55">Enter your details below</p>
+                        <p class="b2 mb--35">Enter your details below</p>
                         <form class="singin-form" method="POST" action="register.php">
                             <div class="form-group">
                                 <label>Full Name</label>
@@ -74,7 +74,7 @@
                                 <input type="password" class="form-control" name="confirm_password" required>
                             </div>
                             <div class="form-group d-flex align-items-center justify-content-between">
-                                <button type="submit" class="axil-btn btn-bg-primary submit-btn">Sign Up</button>
+                                <button type="submit" class="axil-btn submit-btn">Register</button>
                                 <a href="sign-in.php" class="forgot-btn">Already have an account?</a>
                             </div>
                         </form>

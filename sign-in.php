@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="signin-header">
             <div class="row align-items-center">
                 <div class="col-sm-4">
-                    <a href="index.html" class="site-logo"><img src="./assets/images/logo/logo.png" alt="logo"></a>
+                    <a href="index.php" class="site-logo"><img src="./assets/images/logo/logo.png" alt="logo"></a>
                 </div>
                 <div class="col-sm-8">
                     <div class="singin-header-btn">
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="axil-signin-form-wrap">
                     <div class="axil-signin-form">
                         <h3 class="title">Sign in to eTrade.</h3>
-                        <p class="b2 mb--55">Enter your credentials below</p>
+                        <p class="b2 mb--30">Enter your credentials below</p>
 
                         <?php if ($error): ?>
                             <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="password" class="form-control" name="password" required>
                             </div>
                             <div class="form-group d-flex align-items-center justify-content-between">
-                                <button type="submit" class="axil-btn btn-bg-primary submit-btn">Sign In</button>
+                                <button type="submit" class="axil-btn submit-btn">Sign In</button>
                                 <a href="forgot-password.html" class="forgot-btn">Forgot password?</a>
                             </div>
                         </form>
