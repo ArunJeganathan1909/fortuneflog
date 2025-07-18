@@ -1,171 +1,58 @@
-/* custom-home.css */
-
-/* ========== General Styles ========== */
-body {
-    font-family: 'Poppins', sans-serif;
-    color: #333;
-}
-
-.axil-btn {
-    font-weight: 600;
-    padding: 12px 28px;
-    border-radius: 8px;
-    transition: 0.3s ease;
-}
-
-.axil-btn.btn-bg-primary {
-    background-color: #e07a5f;
-    color: white;
-    border: none;
-}
-
-.axil-btn.btn-bg-primary:hover {
-    background-color: #d45d42;
-}
-
-/* ========== Slider Area ========== */
-.main-slider-content h1.title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #2d3142;
-    margin-bottom: 20px;
-}
-
-.slide-thumb-area .main-thumb img {
-    max-width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.banner-product {
+/* Container Row Customization */
+.category-grid {
     margin-top: 20px;
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.product-rating .icon i {
-    color: #f9a826;
-}
-
-/* ========== Featured Categories ========== */
-.slider-section-title h2.title {
-    font-size: 2rem;
-    color: #2d3142;
-    margin-bottom: 1.5rem;
-}
-
-.categrie-product-4 {
-    background: #fff;
-    padding: 20px;
+/* Category Card Styling */
+.category-card {
     text-align: center;
+    border: 1px solid #eee;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
+    background-color: #fff;
+    padding: 16px 10px;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.categrie-product-4:hover {
+.category-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     transform: translateY(-5px);
 }
 
+/* Image Styling */
 .cate-thumb img {
     width: 100%;
+    max-width: 180px;
     height: 180px;
     object-fit: cover;
     border-radius: 8px;
+    margin: 0 auto 12px auto;
+    display: block;
 }
 
+/* Category Title Styling */
 .cat-title {
-    font-size: 1rem;
-    margin-top: 10px;
-    color: #555;
-}
-
-/* ========== Best Deals Section ========== */
-.product-collection-two, .product-collection-three {
-    background-color: #ffffff;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-}
-
-.product-collection-two {
-    background: linear-gradient(to right, #764ba2, #667eea);
-    color: white;
-}
-
-.collection-content h3.title,
-.collection-content h6.title a {
+    font-size: 16px;
     font-weight: 600;
-    color: #fff;
-    text-decoration: none;
+    color: #333;
+    margin: 0;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.price-warp {
-    font-size: 1rem;
-    margin-top: 10px;
-    font-weight: 500;
-}
-
-.collection-thumbnail img {
-    max-height: 140px;
-    border-radius: 12px;
-}
-
-/* ========== Delivery Poster Area ========== */
-.delivery-poster {
-    background-color: #fff7f0;
-    border-radius: 16px;
-    padding: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.delivery-poster .badge {
-    display: inline-block;
-    background-color: #f67280;
-    color: #fff;
-    padding: 5px 12px;
-    border-radius: 999px;
-    font-size: 0.8rem;
-    margin-bottom: 8px;
-}
-
-.delivery-poster h4.title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2d3142;
-}
-
-.delivery-poster p {
-    font-size: 0.95rem;
-    color: #555;
-    max-width: 300px;
-}
-
-.delivery-poster img {
-    max-height: 120px;
-    border-radius: 12px;
-}
-
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    .product-collection-two,
-    .product-collection-three,
-    .delivery-poster {
-        flex-direction: column;
-        text-align: center;
+    .cate-thumb img {
+        max-width: 100px;
+        height: 100px;
     }
 
-    .collection-thumbnail,
-    .delivery-poster .thumbnail {
-        margin-top: 20px;
+    .cat-title {
+        font-size: 14px;
     }
 }

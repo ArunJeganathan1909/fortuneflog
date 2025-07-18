@@ -2,7 +2,7 @@
 include 'layouts/header.php';
 ?>
 
-<!-- <link rel="stylesheet" href="assets/css/custom-home.css" /> -->
+<link rel="stylesheet" href="assets/css/custom-home.css" />
 <main class="main-wrapper">
     <!-- Start Slider Area -->
     <div class="axil-main-slider-area main-slider-style-4">
@@ -84,8 +84,7 @@ include 'layouts/header.php';
             </div>
             <div class="categrie-product-activation-4 slick-layout-wrapper--15 axil-slick-angle angle-top-slide">
                 <div class="slick-single-layout">
-                    <div class="row row-cols-lg-5 row-cols-sm-3 row-cols-2">
-
+                    <div class="row category-grid">
                         <?php
                         $sqlCat = "SELECT * FROM tbl_categories";
                         $rsCat = $conn->query($sqlCat);
@@ -93,21 +92,21 @@ include 'layouts/header.php';
                         if ($rsCat->num_rows > 0) {
                             while ($rowsCat = $rsCat->fetch_assoc()) {
                         ?>
-
-                                <div class="col-lg-3">
-                                    <div class="categrie-product categrie-product-4" data-sal="zoom-out" data-sal-delay="100" data-sal-duration="500">
+                                <div class="col-lg-3 col-md-4 col-sm-4 col-6 mb-4">
+                                    <div class="category-card" data-sal="zoom-out" data-sal-delay="100" data-sal-duration="500">
                                         <a href="shop.php?cat_id=<?= $rowsCat['cat_id'] ?>" class="cate-thumb">
-                                            <img src="admin/uploads/categories/<?= $rowsCat['cat_image'] ?>" alt="Antique Furniture">
+                                            <img src="admin/uploads/categories/<?= $rowsCat['cat_image'] ?>" alt="<?= $rowsCat['cat_name'] ?>">
                                             <h5 class="cat-title"><?= $rowsCat['cat_name'] ?></h5>
                                         </a>
                                     </div>
                                 </div>
-
                         <?php
                             }
                         }
                         ?>
                     </div>
+
+
                 </div>
             </div>
 
