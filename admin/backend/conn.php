@@ -6,7 +6,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "db_fortuneflog2";
+$dbname = "db_fortuneflog";
 
 
 

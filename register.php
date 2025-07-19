@@ -56,7 +56,7 @@
                     <div class="axil-signin-form">
                         <h3 class="title">I’m new here and excited to get started.</h3>
                         <p class="b2 mb--35">Enter your details below</p>
-                        <form class="singin-form" method="POST" action="register.php">
+                        <form class="singin-form" method="POST" action="admin/register.php">
                             <div class="form-group">
                                 <label>Full Name</label>
                                 <input type="text" class="form-control" name="fullname" required>

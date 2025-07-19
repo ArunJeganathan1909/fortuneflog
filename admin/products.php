@@ -26,6 +26,7 @@
                                         <th>Product Title</th>
                                         <th>Images</th>
                                         <th>Description</th>
+                                        <th>Category</th>
                                         <th>Price</th>
                                         <th>Age</th>
                                         <th>Type</th>
@@ -45,9 +46,17 @@
                                             $productDescription = htmlspecialchars($rowProduct['p_description']);
                                             $productPrice = number_format($rowProduct['p_price'], 2);
                                             $productAge = intval($rowProduct['p_age']);
+                                            $catID = intval($rowProduct['p_categories']);
                                             $productType = $rowProduct['p_type'] == 1 ? "Antique" : "Retro";
                                             $mainImagePath = "uploads/products/" . htmlspecialchars($rowProduct['p_image']);
 
+                                            $sqlCat="SELECT * FROM tbl_categories WHERE cat_id='$catID'";
+                                            $rsCat=$conn->query($sqlCat);
+                                            if ($rsCat->num_rows == 1) {
+                                            $rowsCat = $rsCat->fetch_assoc();
+                                            $category=$rowsCat['cat_name'];
+                                               
+                                        }
 
 
                                             // Fetch additional images from tbl_images
@@ -81,6 +90,7 @@
                                                     <button class="btn btn-sm btn-primary mt-2" onclick="openAddMoreImagesModal(<?= $productId ?>)">Add More Images</button>
                                                 </td>
                                                 <td><?= $productDescription ?></td>
+                                                <td><?= $category ?></td>
                                                 <td>$<?= $productPrice ?></td>
                                                 <td><?= $productAge ?>+</td>
                                                 <td><?= $productType ?></td>
@@ -196,7 +206,7 @@
                               <button
                                   type="submit"
                                   class="btn btn-primary btn-lg shadow-sm">
-                                  Add Product
+                                  Edit Product
                               </button>
                           </div>
                       </form>

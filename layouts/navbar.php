@@ -64,41 +64,41 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <i class="far fa-search"></i>
                         </button>
                     </li>
-                    <li class="axil-search d-none-desktop">
+                    <!-- <li class="axil-search d-none-desktop">
                         <a href="javascript:void(0)" class="header-search-icon" title="Search">
                             <i class="far fa-search"></i>
                         </a>
-                    </li>
-                    <li class="shopping-cart">
+                    </li> -->
+                    <!-- <li class="shopping-cart">
                         <a href="#" class="cart-dropdown-btn">
                             <span class="cart-count">2</span>
                             <i class="far fa-shopping-cart"></i>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="my-account">
                         <a href="javascript:void(0)">
                             <i class="far fa-user"></i>
                         </a>
                         <div class="my-account-dropdown">
-                            <span class="title">QUICKLINKS</span>
+<?php if (isset($_SESSION['user_email'])): ?>
+    
                             <ul>
                                 <li>
                                     <a href="my-account.php">My Account</a>
                                 </li>
-                                <li>
-                                    <a href="#">Initiate return</a>
-                                </li>
-                                <li>
-                                    <a href="#">Support</a>
-                                </li>
-                                <li>
-                                    <a href="#">Language</a>
-                                </li>
-                            </ul>
-                            <div class="login-btn">
-                                <a href="sign-in.php" class="axil-btn btn-bg-primary">Login</a>
-                            </div>
-                            <div class="reg-footer text-center">No account yet? <a href="register.php" class="btn-link">REGISTER HERE.</a></div>
+                             
+</ul>
+    <div class="text-center">
+        <p>Welcome, <?= htmlspecialchars($_SESSION['user_fullname']); ?></p>
+        <a href="admin/logout.php" class="axil-btn btn-bg-primary">Logout</a>
+    </div>
+<?php else: ?>
+    <div class="login-btn">
+        <a href="sign-in.php" class="axil-btn btn-bg-primary">Login</a>
+    </div>
+    <div class="reg-footer text-center">No account yet? <a href="register.php" class="btn-link">REGISTER HERE.</a></div>
+<?php endif; ?>
+                            
                         </div>
                     </li>
                     <li class="axil-mobile-toggle">

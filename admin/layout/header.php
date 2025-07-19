@@ -5,6 +5,16 @@ if(!isset($_SESSION['admin_id'])){
 	exit();
 }
 
+// Assuming $conn is your mysqli connection
+
+$sql = "SELECT COUNT(*) as pending_count FROM tbl_products_customers WHERE status = 'pending'";
+$result = $conn->query($sql);
+$pending_count = 0;
+
+if ($result && $row = $result->fetch_assoc()) {
+    $pending_count = (int)$row['pending_count'];
+}
+
     ?>
 
 <!DOCTYPE html>
@@ -150,58 +160,56 @@ if(!isset($_SESSION['admin_id'])){
 
                     <!-- Start::header-element -->
                     <div class="header-element meassage-dropdown d-none d-xl-block">
-                        <!-- Start::header-link|dropdown-toggle -->
-                        <a href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-auto-close="outside"
-                            data-bs-toggle="dropdown">
-                            <i class="fe fe-message-square header-link-icon"></i>
-                            <span class="pulse-danger"></span>
-                        </a>
-                        <!-- End::header-link|dropdown-toggle -->
-                        <!-- Start::main-header-dropdown -->
-                        <div class="main-header-dropdown dropdown-menu dropdown-menu-end" data-popper-placement="none">
-                            <div class="p-3">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <p class="mb-0 fs-17 fw-semibold">You have Messages</p>
-                                    <span class="badge bg-success fw-normal" id="message-data">1 Unread</span>
-                                </div>
+    <a href="javascript:void(0);" class="header-link dropdown-toggle" data-bs-auto-close="outside" data-bs-toggle="dropdown">
+        <i class="fe fe-message-square header-link-icon"></i>
+        <?php if ($pending_count > 0): ?>
+            <span class="pulse-danger"></span>
+        <?php endif; ?>
+    </a>
+
+    <div class="main-header-dropdown dropdown-menu dropdown-menu-end" data-popper-placement="none">
+        <div class="p-3">
+            <div class="d-flex align-items-center justify-content-between">
+                <p class="mb-0 fs-17 fw-semibold">You have Messages</p>
+                <?php if ($pending_count > 0): ?>
+                    <span class="badge bg-danger fw-normal" id="message-data"><?= $pending_count ?> Pending</span>
+                <?php else: ?>
+                    <span class="badge bg-success fw-normal" id="message-data">No Pending</span>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <ul class="list-unstyled mb-0" id="header-notification-scroll1">
+            <?php if ($pending_count > 0): ?>
+                <li class="dropdown-item">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1 d-flex align-items-center justify-content-between">
+                            <div>
+                                <p class="mb-0 fw-semibold">
+                                    <a href="referes.php">You have <?= $pending_count ?> product(s) pending approval.</a>
+                                </p>
+                                <span class="text-muted fw-normal fs-12 header-notification-text">Please review them as soon as possible.</span>
                             </div>
-                            <div class="dropdown-divider"></div>
-                            <ul class="list-unstyled mb-0" id="header-notification-scroll1">
-                                <li class="dropdown-item">
-                                    <div class="d-flex align-items-start">
-                                        <div class="flex-grow-1 d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <p class="mb-0 fw-semibold"><a href="default-chat.php">Madeleine<span
-                                                            class="text-muted fs-12 fw-normal ps-1 d-inline-block"> 3 hours ago </span></a>
-                                                </p>
-                                                <span class="text-muted fw-normal fs-12 header-notification-text">Hey! there I'
-                                                    am available....</span>
-                                            </div>
-                                            <div>
-                                                <a href="javascript:void(0);"
-                                                    class="min-w-fit-content text-muted me-1 dropdown-item-close3"><i
-                                                        class="ti ti-x fs-16"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="p-3 empty-header-item1 border-top">
-                                <div class="d-grid">
-                                    <a href="default-chat.php" class="btn text-muted p-0 border-0">See all Messages</a>
-                                </div>
-                            </div>
-                            <div class="p-5 empty-item1 d-none">
-                                <div class="text-center">
-                                    <span class="avatar avatar-xl avatar-rounded bg-secondary-transparent">
-                                        <i class="ri-notification-off-line fs-2"></i>
-                                    </span>
-                                    <h6 class="fw-semibold mt-3">No New Notifications</h6>
-                                </div>
+                            <div>
+                                <a href="javascript:void(0);" class="min-w-fit-content text-muted me-1 dropdown-item-close3">
+                                    <i class="ti ti-x fs-16"></i>
+                                </a>
                             </div>
                         </div>
-                        <!-- End::main-header-dropdown -->
                     </div>
+                </li>
+            <?php else: ?>
+                <li class="dropdown-item">
+                    <div class="text-center text-muted fw-normal">
+                        No pending products at the moment.
+                    </div>
+                </li>
+            <?php endif; ?>
+        </ul>
+
+    </div>
+</div>
+
                     <!-- End::header-element -->
 
 
@@ -220,10 +228,10 @@ if(!isset($_SESSION['admin_id'])){
                         <!-- End::header-link|dropdown-toggle -->
                         <ul class="main-header-dropdown dropdown-menu pt-0 overflow-hidden header-profile-dropdown dropdown-menu-end"
                             aria-labelledby="mainHeaderProfile">
-                            <li><a class="dropdown-item d-flex" href="profile.php"><i
+                            <!-- <li><a class="dropdown-item d-flex" href="profile.php"><i
                                         class="ti ti-user-circle fs-18 me-2 op-7"></i>Profile</a></li>
                             <li><a class="dropdown-item d-flex" href="Faq.php"><i
-                                        class="ti ti-headset fs-18 me-2 op-7"></i>Support</a></li>
+                                        class="ti ti-headset fs-18 me-2 op-7"></i>Support</a></li> -->
                             <li><a class="dropdown-item d-flex" href="login.php"><i
                                         class="ti ti-logout fs-18 me-2 op-7"></i>Log Out</a></li>
                         </ul>

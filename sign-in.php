@@ -1,29 +1,9 @@
+
+
 <?php
-session_start();
-
-$error = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sample user credentials
-    $valid_email = 'arun@gmail.com';
-    $valid_password = 'arun114740';
-
-    // Get submitted form data
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    // Simple authentication check
-    if ($email === $valid_email && $password === $valid_password) {
-        // Store user info in session (for example)
-        $_SESSION['user_email'] = $email;
-
-        // Redirect to index.php after successful login
-        header('Location: index.php');
-        exit;
-    } else {
-        $error = 'Invalid email or password.';
-    }
-}
+include "admin/backend/conn.php";
+$error = $_SESSION['login_error'] ?? '';
+unset($_SESSION['login_error']); // Clear it after showing
 ?>
 
 <!doctype html>
@@ -85,12 +65,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="axil-signin-form">
                         <h3 class="title">Sign in to eTrade.</h3>
                         <p class="b2 mb--30">Enter your credentials below</p>
-
-                        <?php if ($error): ?>
-                            <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
-                        <?php endif; ?>
-
-                        <form class="singin-form" method="POST" action="">
+<?php if ($error): ?>
+    <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
+<?php endif; ?>
+                        <form class="singin-form" method="POST" action="admin/signin.php">
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="email" class="form-control" name="email" required value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
