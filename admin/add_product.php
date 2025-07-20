@@ -1,5 +1,7 @@
+
 <?php
 include "backend/conn.php";
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title = $_POST['pTitle'];
@@ -17,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt = $conn->prepare("INSERT INTO tbl_products_customers
         (title, description, price, age, type, contact_name, contact_address, contact_email, contact_phone,p_categories)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
-    $stmt->bind_param("ssdisssssi", $title, $description, $price, $age, $type, $contactName, $contactAddress, $email, $phone,$p_categories);
+    $stmt->bind_param("ssdisssssi", $title, $description, $price, $age, $type, $contactName, $contactAddress, $email, $phone, $p_categories);
 
     if ($stmt->execute()) {
         $productId = $stmt->insert_id;

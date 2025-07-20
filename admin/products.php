@@ -1,10 +1,11 @@
 <?php include "layout/header.php"; ?>
+<link rel="stylesheet" href="assets/css/custom-categories.css">
 
 <div class="main-content app-content">
     <div class="container-fluid">
         <div class="row" id="user-profile">
             <div class="col-lg-12">
-                <div class="card custom-card">
+                <div class="card custom-card add">
                     <div class="card-body">
                         <div class="container">
                             <button class="btn btn-sm btn-success" onclick="openModelAddProducts()">Add Products</button>

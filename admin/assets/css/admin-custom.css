@@ -1,0 +1,15 @@
+.app-sidebar .slide .side-menu__item.active {
+  background: #82001d;
+}
+
+.app-sidebar .slide .side-menu__item:hover {
+  background: #ccc;
+  border: #82001d 2px solid;
+}
+
+.app-sidebar .slide .side-menu__item:focus {
+  border-start-start-radius: 0;
+  border-start-end-radius: 60px;
+  border-end-end-radius: 60px;
+  border-end-start-radius: 0;
+}

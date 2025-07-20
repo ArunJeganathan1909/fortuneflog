@@ -1,5 +1,6 @@
 <?php include "layout/header.php";
 
+
 // Fetch products and their images
 $sql = "SELECT p.*, pi.image_path, c.cat_name AS category_name 
         FROM tbl_products_customers p 
@@ -47,6 +48,8 @@ if (isset($_SESSION['message'])) {
 }
 ?>
 
+<link rel="stylesheet" href="assets/css/custom-categories.css">
+
 <div class="main-content app-content">
     <div class="container-fluid">
 
@@ -68,15 +71,17 @@ if (isset($_SESSION['message'])) {
                                         <th>Type</th>
                                         <th>Contact</th>
                                         <th>Status</th>
-                                        <th><div class="mb-3">
-  <label for="statusFilter" class="form-label">Filter by Status:</label>
-  <select id="statusFilter" class="form-select" style="max-width: 200px;">
-    <option value="all" selected>All</option>
-    <option value="pending">Pending</option>
-    <option value="approved">Approved</option>
-    <option value="rejected">Rejected</option>
-  </select>
-</div></th>
+                                        <th>
+                                            <div class="mb-3">
+                                                <label for="statusFilter" class="form-label">Filter by Status:</label>
+                                                <select id="statusFilter" class="form-select" style="max-width: 200px;">
+                                                    <option value="all" selected>All</option>
+                                                    <option value="pending">Pending</option>
+                                                    <option value="approved">Approved</option>
+                                                    <option value="rejected">Rejected</option>
+                                                </select>
+                                            </div>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -85,15 +90,14 @@ if (isset($_SESSION['message'])) {
                                             <td><?= htmlspecialchars($product['title']) ?></td>
                                             <td>
                                                 <?php foreach ($product['images'] as $img): ?>
-                                                   <img 
-                                                        src="<?= htmlspecialchars($img) ?>" 
-                                                        alt="Product Image" 
-                                                        class="img-thumbnail m-1 enlarge-image" 
+                                                    <img
+                                                        src="<?= htmlspecialchars($img) ?>"
+                                                        alt="Product Image"
+                                                        class="img-thumbnail m-1 enlarge-image"
                                                         style="width: 60px; height: 60px; object-fit: cover; cursor: pointer;"
-                                                        data-bs-toggle="modal" 
+                                                        data-bs-toggle="modal"
                                                         data-bs-target="#imageModal"
-                                                        data-image="<?= htmlspecialchars($img) ?>"
-                                                    >
+                                                        data-image="<?= htmlspecialchars($img) ?>">
                                                 <?php endforeach; ?>
                                             </td>
                                             <td><?= htmlspecialchars($product['description']) ?></td>
@@ -108,16 +112,16 @@ if (isset($_SESSION['message'])) {
                                                 <?= htmlspecialchars($product['contact']['phone']) ?>
                                             </td>
                                             <?php
-                                                $status = strtolower(trim($product['status']));
-                                                $badgeClass = '';
+                                            $status = strtolower(trim($product['status']));
+                                            $badgeClass = '';
 
-                                                if ($status === 'approved') {
-                                                    $badgeClass = 'bg-success';
-                                                } elseif ($status === 'rejected') {
-                                                    $badgeClass = 'bg-danger';
-                                                } else {
-                                                    $badgeClass = 'bg-warning';
-                                                }
+                                            if ($status === 'approved') {
+                                                $badgeClass = 'bg-success';
+                                            } elseif ($status === 'rejected') {
+                                                $badgeClass = 'bg-danger';
+                                            } else {
+                                                $badgeClass = 'bg-warning';
+                                            }
                                             ?>
                                             <td>
                                                 <span class="badge <?= $badgeClass ?>">
@@ -199,47 +203,47 @@ if (isset($_SESSION['message'])) {
         });
     });
 
-  document.getElementById('statusFilter').addEventListener('change', function() {
-    const filter = this.value.toLowerCase();
-    const table = document.querySelector('table tbody');
-    const rows = table.querySelectorAll('tr');
-
-    rows.forEach(row => {
-      // Find the status cell (8th cell, zero-based index 7)
-      const statusCell = row.cells[8];
-      if (!statusCell) return; // safety check
-
-      const statusText = statusCell.textContent.trim().toLowerCase();
-
-      if (filter === 'all' || statusText === filter) {
-        row.style.display = ''; // show row
-      } else {
-        row.style.display = 'none'; // hide row
-      }
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    const imageModal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
-
-    document.querySelectorAll(".enlarge-image").forEach(img => {
-        img.addEventListener("click", function () {
-            const imagePath = this.getAttribute("data-image");
-            modalImage.setAttribute("src", imagePath);
-        });
-    });
-
-    // Status filter code remains the same
-    document.getElementById('statusFilter').addEventListener('change', function () {
+    document.getElementById('statusFilter').addEventListener('change', function() {
         const filter = this.value.toLowerCase();
-        const rows = document.querySelectorAll('table tbody tr');
+        const table = document.querySelector('table tbody');
+        const rows = table.querySelectorAll('tr');
 
         rows.forEach(row => {
+            // Find the status cell (8th cell, zero-based index 7)
             const statusCell = row.cells[8];
-            const statusText = statusCell?.textContent?.trim().toLowerCase();
-            row.style.display = (!statusText || filter === 'all' || statusText === filter) ? '' : 'none';
+            if (!statusCell) return; // safety check
+
+            const statusText = statusCell.textContent.trim().toLowerCase();
+
+            if (filter === 'all' || statusText === filter) {
+                row.style.display = ''; // show row
+            } else {
+                row.style.display = 'none'; // hide row
+            }
         });
     });
-});
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const imageModal = document.getElementById("imageModal");
+        const modalImage = document.getElementById("modalImage");
+
+        document.querySelectorAll(".enlarge-image").forEach(img => {
+            img.addEventListener("click", function() {
+                const imagePath = this.getAttribute("data-image");
+                modalImage.setAttribute("src", imagePath);
+            });
+        });
+
+        // Status filter code remains the same
+        document.getElementById('statusFilter').addEventListener('change', function() {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('table tbody tr');
+
+            rows.forEach(row => {
+                const statusCell = row.cells[8];
+                const statusText = statusCell?.textContent?.trim().toLowerCase();
+                row.style.display = (!statusText || filter === 'all' || statusText === filter) ? '' : 'none';
+            });
+        });
+    });
 </script>
