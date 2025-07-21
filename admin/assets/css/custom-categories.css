@@ -7,6 +7,8 @@ body {
 .main-content {
   padding-top: 1rem;
   padding-bottom: 2rem;
+  margin-inline-start: 0;
+  margin-top: 0;
 }
 
 /* Card Styling */
@@ -142,6 +144,21 @@ textarea.form-control {
   resize: vertical;
 }
 
+.card-body .btn.btn-sm {
+  color: #82001d;
+  border: #82001d 1px solid;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  padding: 8px 40px;
+  border-radius: 10px;
+  transition: 1s;
+}
+
+.card-body .btn.btn-sm:hover {
+  background-color: #82001d;
+  color: #ffffff;
+}
+
 /* ===== Table Base Styles ===== */
 .table {
   width: 100%;
@@ -174,7 +191,7 @@ textarea.form-control {
 }
 
 .table tbody tr:nth-child(even) {
-  background-color: #f9f3f0; 
+  background-color: #f9f3f0;
 }
 
 .table tbody td {
@@ -211,7 +228,16 @@ textarea.form-control {
   border-radius: 10px;
 }
 
+@media (max-width: 992px) {
+  .main-content {
+    height: 80vh;
+  }
+}
+
 @media (max-width: 576px) {
+  .main-content {
+    height: 75vh;
+  }
   .table thead {
     display: none;
   }
@@ -236,7 +262,7 @@ textarea.form-control {
   }
 
   .table td {
-    text-align: right;
+    text-align: left;
     position: relative;
     padding-left: 50%;
   }

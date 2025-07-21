@@ -48,7 +48,6 @@ if (isset($_SESSION['message'])) {
 }
 ?>
 
-<link rel="stylesheet" href="assets/css/custom-categories.css">
 
 <div class="main-content app-content">
     <div class="container-fluid">

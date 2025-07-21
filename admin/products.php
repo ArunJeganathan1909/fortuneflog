@@ -1,5 +1,4 @@
 <?php include "layout/header.php"; ?>
-<link rel="stylesheet" href="assets/css/custom-categories.css">
 
 <div class="main-content app-content">
     <div class="container-fluid">
@@ -8,7 +7,7 @@
                 <div class="card custom-card add">
                     <div class="card-body">
                         <div class="container">
-                            <button class="btn btn-sm btn-success" onclick="openModelAddProducts()">Add Products</button>
+                            <button class="btn btn-sm" onclick="openModelAddProducts()">Add Products</button>
                         </div>
                     </div>
                     <div id="view_products"></div>
@@ -51,13 +50,12 @@
                                             $productType = $rowProduct['p_type'] == 1 ? "Antique" : "Retro";
                                             $mainImagePath = "uploads/products/" . htmlspecialchars($rowProduct['p_image']);
 
-                                            $sqlCat="SELECT * FROM tbl_categories WHERE cat_id='$catID'";
-                                            $rsCat=$conn->query($sqlCat);
+                                            $sqlCat = "SELECT * FROM tbl_categories WHERE cat_id='$catID'";
+                                            $rsCat = $conn->query($sqlCat);
                                             if ($rsCat->num_rows == 1) {
-                                            $rowsCat = $rsCat->fetch_assoc();
-                                            $category=$rowsCat['cat_name'];
-                                               
-                                        }
+                                                $rowsCat = $rsCat->fetch_assoc();
+                                                $category = $rowsCat['cat_name'];
+                                            }
 
 
                                             // Fetch additional images from tbl_images
@@ -73,7 +71,7 @@
                                                             data-bs-image-id="<?= $productId ?>"
                                                             data-bs-image-path="<?= $mainImagePath ?>"
                                                             data-bs-main-image="1">
-                                                    <?php }  else { ?>
+                                                    <?php } else { ?>
                                                         <button class="btn btn-sm btn-warning mt-2" onclick="openAddImagesModal(<?= $productId ?>)">Update Image</button>
                                                     <?php } ?>
 
@@ -99,8 +97,7 @@
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-sm btn-warning"
-                                                            onclick="openModalEditProduct(<?= $productId ?>, '<?= $productTitle ?>', '<?= $productDescription ?>', <?= $rowProduct['p_price'] ?>, <?= $productAge ?>, <?= $rowProduct['p_type'] ?>, <?= $rowProduct['p_categories'] ?>)"
-                                                            >Edit</button>
+                                                        onclick="openModalEditProduct(<?= $productId ?>, '<?= $productTitle ?>', '<?= $productDescription ?>', <?= $rowProduct['p_price'] ?>, <?= $productAge ?>, <?= $rowProduct['p_type'] ?>, <?= $rowProduct['p_categories'] ?>)">Edit</button>
                                                     <button class="btn btn-sm btn-danger" onclick="deleteProduct(<?= $productId ?>, '<?= $productTitle ?>')">Delete</button>
                                                 </td>
                                             </tr>
@@ -128,89 +125,89 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12 mb-3" id="add_category">
-                      <form method="post" action="backend/editProduct.php" enctype="multipart/form-data">
-                        <input type="hidden" id="edit_product_id" name="product_id" value="">
-                          <div class="form-group mb-3">
-                              <label for="pTitle" class="form-label fw-semibold">Product Title</label>
-                              <input
-                                  type="text"
-                                  name="pTitle"
-                                  id="edit_pTitle"
-                                  class="form-control shadow-sm border-primary"
-                                  placeholder="Enter product title"
-                                  required>
-                          </div>
+                        <form method="post" action="backend/editProduct.php" enctype="multipart/form-data">
+                            <input type="hidden" id="edit_product_id" name="product_id" value="">
+                            <div class="form-group mb-3">
+                                <label for="pTitle" class="form-label fw-semibold">Product Title</label>
+                                <input
+                                    type="text"
+                                    name="pTitle"
+                                    id="edit_pTitle"
+                                    class="form-control shadow-sm border-primary"
+                                    placeholder="Enter product title"
+                                    required>
+                            </div>
 
-                          <div class="form-group mb-3">
-                            <label for="pCat" class="form-label fw-semibold">Product Category</label>
-                            <select name="pCat" id="edit_pCat" class="form-control shadow-sm border-primary">
-                                <option value="">Select category</option>
-                                <?php
-                                
+                            <div class="form-group mb-3">
+                                <label for="pCat" class="form-label fw-semibold">Product Category</label>
+                                <select name="pCat" id="edit_pCat" class="form-control shadow-sm border-primary">
+                                    <option value="">Select category</option>
+                                    <?php
 
-                                $sqlCat = "SELECT * FROM tbl_categories";
-                                $rsCat = $conn->query($sqlCat);
 
-                                if ($rsCat->num_rows > 0) {
-                                    while ($rowsCat = $rsCat->fetch_assoc()) {
-                                        ?>
-                                        <option value="<?= $rowsCat['cat_id'] ?>"><?= htmlspecialchars($rowsCat['cat_name']) ?></option>
-                                        <?php
+                                    $sqlCat = "SELECT * FROM tbl_categories";
+                                    $rsCat = $conn->query($sqlCat);
+
+                                    if ($rsCat->num_rows > 0) {
+                                        while ($rowsCat = $rsCat->fetch_assoc()) {
+                                    ?>
+                                            <option value="<?= $rowsCat['cat_id'] ?>"><?= htmlspecialchars($rowsCat['cat_name']) ?></option>
+                                    <?php
+                                        }
                                     }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                          <div class="form-group mb-3">
-                              <label for="pDescription" class="form-label fw-semibold">Product Description</label>
-                              <textarea
-                                  name="pDescription"
-                                  id="edit_pDescription"
-                                  class="form-control shadow-sm border-primary"
-                                  rows="3"
-                                  placeholder="Enter product description"
-                                  required></textarea>
-                          </div>
-                          <div class="form-group mb-3">
-                              <label for="pPrice" class="form-label fw-semibold">Product Price</label>
-                              <input
-                                  type="number"
-                                  name="pPrice"
-                                  id="edit_pPrice"
-                                  class="form-control shadow-sm border-primary"
-                                  placeholder="Enter product price"
-                                  step="0.01"
-                                  required>
-                          </div>
-                          <div class="form-group mb-3">
-                              <label for="pAge" class="form-label fw-semibold">Product Age</label>
-                              <input
-                                  type="number"
-                                  name="pAge"
-                                  id="edit_pAge"
-                                  class="form-control shadow-sm border-primary"
-                                  placeholder="Enter age suitability"
-                                  required>
-                          </div>
-                          <div class="form-group mb-3">
-                              <label for="pType" class="form-label fw-semibold">Product Type</label>
-                              <select
-                                  name="pType"
-                                  id="edit_pType"
-                                  class="form-control shadow-sm border-primary"
-                                  required>
-                                  <option value="0">Antique</option>
-                                  <option value="1">Retro</option>
-                              </select>
-                          </div>
-                          <div class="d-grid">
-                              <button
-                                  type="submit"
-                                  class="btn btn-primary btn-lg shadow-sm">
-                                  Edit Product
-                              </button>
-                          </div>
-                      </form>
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="pDescription" class="form-label fw-semibold">Product Description</label>
+                                <textarea
+                                    name="pDescription"
+                                    id="edit_pDescription"
+                                    class="form-control shadow-sm border-primary"
+                                    rows="3"
+                                    placeholder="Enter product description"
+                                    required></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="pPrice" class="form-label fw-semibold">Product Price</label>
+                                <input
+                                    type="number"
+                                    name="pPrice"
+                                    id="edit_pPrice"
+                                    class="form-control shadow-sm border-primary"
+                                    placeholder="Enter product price"
+                                    step="0.01"
+                                    required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="pAge" class="form-label fw-semibold">Product Age</label>
+                                <input
+                                    type="number"
+                                    name="pAge"
+                                    id="edit_pAge"
+                                    class="form-control shadow-sm border-primary"
+                                    placeholder="Enter age suitability"
+                                    required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="pType" class="form-label fw-semibold">Product Type</label>
+                                <select
+                                    name="pType"
+                                    id="edit_pType"
+                                    class="form-control shadow-sm border-primary"
+                                    required>
+                                    <option value="0">Antique</option>
+                                    <option value="1">Retro</option>
+                                </select>
+                            </div>
+                            <div class="d-grid">
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary btn-lg shadow-sm">
+                                    Edit Product
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -337,128 +334,160 @@
 
 
 <script>
+    function openModalEditProduct(productId, productTitle, productDescription, productPrice, productAge, productType, productCatogory) {
 
-function openModalEditProduct(productId, productTitle, productDescription, productPrice, productAge, productType,productCatogory) {
+        $('#editProductModal').modal('show');
 
-    $('#editProductModal').modal('show');
+        document.getElementById("edit_product_id").value = productId;
+        document.getElementById("edit_pTitle").value = productTitle;
+        document.getElementById("edit_pDescription").value = productDescription;
+        document.getElementById("edit_pPrice").value = productPrice;
+        document.getElementById("edit_pAge").value = productAge;
+        document.getElementById("edit_pType").value = productType;
+        document.getElementById("edit_pCat").value = productCatogory;
+    }
 
-    document.getElementById("edit_product_id").value = productId;
-    document.getElementById("edit_pTitle").value = productTitle;
-    document.getElementById("edit_pDescription").value = productDescription;
-    document.getElementById("edit_pPrice").value = productPrice;
-    document.getElementById("edit_pAge").value = productAge;
-    document.getElementById("edit_pType").value = productType;
-    document.getElementById("edit_pCat").value = productCatogory;
-}
+    function openAddMoreImagesModal(productId) {
+        document.getElementById('addMoreImagesProductId').value = productId;
+        var addMoreImagesModal = new bootstrap.Modal(document.getElementById('addMoreImagesModal'));
+        addMoreImagesModal.show();
+    }
 
-function openAddMoreImagesModal(productId) {
-    document.getElementById('addMoreImagesProductId').value = productId;
-    var addMoreImagesModal = new bootstrap.Modal(document.getElementById('addMoreImagesModal'));
-    addMoreImagesModal.show();
-}
+    function openAdvanceDetail(productId) {
+        $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', {
+            productId: productId
+        });
+        $('#getAdvanceList').load('ajax/getAdvanceList.php', {
+            productId: productId
+        });
+    }
 
-function openAdvanceDetail(productId){
-    $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', { productId: productId });
-    $('#getAdvanceList').load('ajax/getAdvanceList.php', { productId: productId });
-}
+    function openAdditionalInfo(productId) {
+        $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', {
+            productId: productId
+        });
+        $('#specsList').load('ajax/getSpecsList.php', {
+            productId: productId
+        });
+    }
 
-function openAdditionalInfo(productId){
-    $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', { productId: productId });
-    $('#specsList').load('ajax/getSpecsList.php', { productId: productId });
-}
+    function openAddFeaturesModal(productId) {
+        $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', {
+            productId: productId
+        });
+        $('#featureList').load('ajax/getFeatureList.php', {
+            productId: productId
+        });
+    }
 
-function openAddFeaturesModal(productId){
-    $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', { productId: productId });
-    $('#featureList').load('ajax/getFeatureList.php', { productId: productId });
-}
+    function openAddColorModal(productId) {
+        $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', {
+            productId: productId
+        });
+        $('#colorList').load('ajax/getColorList.php', {
+            productId: productId
+        });
+    }
 
-function openAddColorModal(productId){
-    $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', { productId: productId });
-    $('#colorList').load('ajax/getColorList.php', { productId: productId });
-}
+    function openAddSizeModal(productId) {
+        $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', {
+            productId: productId
+        });
+        $('#sizeList').load('ajax/getSizeList.php', {
+            productId: productId
+        });
+    }
 
-function openAddSizeModal(productId){
-    $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', { productId: productId });
-    $('#sizeList').load('ajax/getSizeList.php', { productId: productId });
-}
+    function openAddOfferModal(productId) {
+        $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', {
+            productId: productId
+        });
+        $('#offerList').load('ajax/getOfferList.php', {
+            productId: productId
+        });
+    }
 
-function openAddOfferModal(productId){
-    $('#addMoreDetailsModal.modal-content').load('ajax/addMoreDetails.php', { productId: productId });
-    $('#offerList').load('ajax/getOfferList.php', { productId: productId });
-}
+    function openAddMoreDetailsModal(productId) {
+        // Load content into modal
 
-function openAddMoreDetailsModal(productId) {
-    // Load content into modal
+        $('#addMoreDetailsModal .modal-content').load('ajax/addMoreDetails.php', {
+            productId: productId
+        }, function() {
+            // Initialize tabs after content loads
+            $('#getAdvanceList').load('ajax/getAdvanceList.php', {
+                productId: productId
+            });
+            const tabTriggerList = [].slice.call(this.querySelectorAll('[data-bs-toggle="tab"]'));
+            tabTriggerList.forEach(tabTriggerEl => new bootstrap.Tab(tabTriggerEl));
 
-    $('#addMoreDetailsModal .modal-content').load('ajax/addMoreDetails.php', {productId: productId}, function() {
-        // Initialize tabs after content loads
-        $('#getAdvanceList').load('ajax/getAdvanceList.php', { productId: productId });
-        const tabTriggerList = [].slice.call(this.querySelectorAll('[data-bs-toggle="tab"]'));
-        tabTriggerList.forEach(tabTriggerEl => new bootstrap.Tab(tabTriggerEl));
+            // Load existing details
+            loadExistingDetails(productId);
+        });
 
-        // Load existing details
-        loadExistingDetails(productId);
-    });
+        $('#addMoreDetailsModal').modal('show');
+    }
 
-    $('#addMoreDetailsModal').modal('show');
-}
+    function loadExistingDetails(productId) {
+        // Load existing advance details
+        $('#featuresList').load('../backend/getAdvanceDetails.php', {
+            productId: productId
+        });
 
-function loadExistingDetails(productId) {
-    // Load existing advance details
-    $('#featuresList').load('../backend/getAdvanceDetails.php', {productId: productId});
+        // Load existing specifications
+        $('#specsList').load('../backend/getSpecifications.php', {
+            productId: productId
+        });
+    }
 
-    // Load existing specifications
-    $('#specsList').load('../backend/getSpecifications.php', {productId: productId});
-}
-function openAddImagesModal(productId) {
-    document.getElementById('addImagesProductId').value = productId;
-    var addImagesModal = new bootstrap.Modal(document.getElementById('addImagesModal'));
-    addImagesModal.show();
-}
+    function openAddImagesModal(productId) {
+        document.getElementById('addImagesProductId').value = productId;
+        var addImagesModal = new bootstrap.Modal(document.getElementById('addImagesModal'));
+        addImagesModal.show();
+    }
 
-// function openAddFeaturesModal(productId) {
-//     document.getElementById('addFeaturesProductId').value = productId;
-//     var addFeaturesModal = new bootstrap.Modal(document.getElementById('addFeaturesModal'));
-//     addFeaturesModal.show();
-// }
+    // function openAddFeaturesModal(productId) {
+    //     document.getElementById('addFeaturesProductId').value = productId;
+    //     var addFeaturesModal = new bootstrap.Modal(document.getElementById('addFeaturesModal'));
+    //     addFeaturesModal.show();
+    // }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const imageModal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
-    const modalImageId = document.getElementById("modalImageId");
-    const modalImagePath = document.getElementById("modalImagePath");
-    const modalIsMainImage = document.getElementById("modalIsMainImage");
+    document.addEventListener("DOMContentLoaded", function() {
+        const imageModal = document.getElementById("imageModal");
+        const modalImage = document.getElementById("modalImage");
+        const modalImageId = document.getElementById("modalImageId");
+        const modalImagePath = document.getElementById("modalImagePath");
+        const modalIsMainImage = document.getElementById("modalIsMainImage");
 
-    document.querySelectorAll("[data-bs-toggle='modal'][data-bs-target='#imageModal']").forEach(img => {
-        img.addEventListener("click", function () {
-            const imagePath = this.getAttribute("data-bs-image-path");
-            const imageId = this.getAttribute("data-bs-image-id");
-            const isMainImage = this.hasAttribute("data-bs-main-image") ? "1" : "0";
+        document.querySelectorAll("[data-bs-toggle='modal'][data-bs-target='#imageModal']").forEach(img => {
+            img.addEventListener("click", function() {
+                const imagePath = this.getAttribute("data-bs-image-path");
+                const imageId = this.getAttribute("data-bs-image-id");
+                const isMainImage = this.hasAttribute("data-bs-main-image") ? "1" : "0";
 
-            // Set the modal image source
-            modalImage.setAttribute("src", imagePath);
-            // Set hidden input values for the delete form
-            modalImageId.value = imageId;
-            modalImagePath.value = imagePath;
-            modalIsMainImage.value = isMainImage;
+                // Set the modal image source
+                modalImage.setAttribute("src", imagePath);
+                // Set hidden input values for the delete form
+                modalImageId.value = imageId;
+                modalImagePath.value = imagePath;
+                modalIsMainImage.value = isMainImage;
+            });
         });
     });
-});
 
-function openModelAddProducts() {
-    $('#showModal').modal('show');
-    $('#add_categories').load('ajax/addProducts.php');
+    function openModelAddProducts() {
+        $('#showModal').modal('show');
+        $('#add_categories').load('ajax/addProducts.php');
 
-}
+    }
 
-function deleteProduct(productId, productTitle) {
+    function deleteProduct(productId, productTitle) {
         // Confirm with the user before deleting
         if (confirm("Are you sure you want to delete the product: " + productTitle + "?")) {
             // Make an AJAX request to delete the product and all related data
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "backend/deleteProduct.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function () {
+            xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = xhr.responseText;
                     if (response == "success") {
@@ -477,456 +506,490 @@ function deleteProduct(productId, productTitle) {
 
     function deleteFeature(featureId) {
         alert(featureId)
-    if (confirm("Are you sure you want to delete this feature?")) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "backend/deleteFeature.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        if (confirm("Are you sure you want to delete this feature?")) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "backend/deleteFeature.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                const response = xhr.responseText.trim();
-                if (response === "success") {
-                    // Better to remove the element instead of reloading
-                    const element = document.querySelector(`li button[onclick*="${featureId}"]`).closest('li');
-                    element.remove();
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const response = xhr.responseText.trim();
+                    if (response === "success") {
+                        // Better to remove the element instead of reloading
+                        const element = document.querySelector(`li button[onclick*="${featureId}"]`).closest('li');
+                        element.remove();
+                    } else {
+                        alert(`Error: ${response}`);
+                    }
                 } else {
-                    alert(`Error: ${response}`);
+                    alert("Request failed with status: " + xhr.status);
                 }
-            } else {
-                alert("Request failed with status: " + xhr.status);
-            }
-        };
+            };
 
-        xhr.onerror = function() {
-            alert("Request failed");
-        };
+            xhr.onerror = function() {
+                alert("Request failed");
+            };
 
-        xhr.send("feature_id=" + encodeURIComponent(featureId));
-    }
-}
-
-
-
-function addProduct() {
-    // Retrieve form values
-    var productId = document.getElementById("productId").value;
-    var desc = document.getElementById("desc").value;
-    var heading = document.getElementById("heading").value;
-
-    // Validate input values
-    if (!heading || !desc) {
-        alert("Both Heading and Description are required.");
-        return;
-    }
-
-    // AJAX request
-    $.ajax({
-        type: 'POST',
-        url: 'backend/addAdvanceDetail.php',
-        data: {
-            productId: productId, // PHP expects this parameter
-            desc: desc,
-            heading: heading
-        },
-        dataType: 'json', // Expecting JSON response from backend
-        success: function(response) {
-            if (response.success) {
-                loadExistingDetails(productId); // Reload existing details
-                $('#getAdvanceList').load('ajax/getAdvanceList.php', { productId: productId }); // Refresh details list
-                $('#advanceDetailForm')[0].reset(); // Reset the form
-            } else {
-                alert(response.message); // Display failure message
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("AJAX Error:", status, error); // Log error details for debugging
-            alert('Error submitting form. Please try again.');
+            xhr.send("feature_id=" + encodeURIComponent(featureId));
         }
-    });
-}
+    }
 
-function deleteDetail(adId, productId) {
-    // alert(productId);
-    if (confirm("Are you sure you want to delete this detail?")) {
+
+
+    function addProduct() {
+        // Retrieve form values
+        var productId = document.getElementById("productId").value;
+        var desc = document.getElementById("desc").value;
+        var heading = document.getElementById("heading").value;
+
+        // Validate input values
+        if (!heading || !desc) {
+            alert("Both Heading and Description are required.");
+            return;
+        }
+
+        // AJAX request
         $.ajax({
-            type: "POST",
-            url: "backend/deleteAdvanceDetail.php",
-            data: { ad_id: adId },
+            type: 'POST',
+            url: 'backend/addAdvanceDetail.php',
+            data: {
+                productId: productId, // PHP expects this parameter
+                desc: desc,
+                heading: heading
+            },
+            dataType: 'json', // Expecting JSON response from backend
             success: function(response) {
-                try {
-                    let res = JSON.parse(response);
-                    alert(res.message);
-
-                    if (res.success) {
-                        // Reload the modal content and detail list after a successful deletion
-                        loadExistingDetails(productId);
-                        $('#getAdvanceList').load('ajax/getAdvanceList.php', { productId: productId });
-                        // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
-                    }
-                } catch (e) {
-                    console.error("Error parsing JSON response", e);
-                    alert('Unexpected response format');
+                if (response.success) {
+                    loadExistingDetails(productId); // Reload existing details
+                    $('#getAdvanceList').load('ajax/getAdvanceList.php', {
+                        productId: productId
+                    }); // Refresh details list
+                    $('#advanceDetailForm')[0].reset(); // Reset the form
+                } else {
+                    alert(response.message); // Display failure message
                 }
             },
             error: function(xhr, status, error) {
-                console.error("Error deleting detail:", error);
-                alert("Error deleting detail. Please try again.");
+                console.error("AJAX Error:", status, error); // Log error details for debugging
+                alert('Error submitting form. Please try again.');
             }
         });
     }
-}
 
+    function deleteDetail(adId, productId) {
+        // alert(productId);
+        if (confirm("Are you sure you want to delete this detail?")) {
+            $.ajax({
+                type: "POST",
+                url: "backend/deleteAdvanceDetail.php",
+                data: {
+                    ad_id: adId
+                },
+                success: function(response) {
+                    try {
+                        let res = JSON.parse(response);
+                        alert(res.message);
 
-
-function addSpecs() {
-    // Retrieve form values
-    var productId = document.getElementById("productId").value;
-    var details = document.getElementById("details").value;
-    var specs = document.getElementById("specs").value;
-
-    // Validate input values
-    if (!details || !specs) {
-        alert("Both Specs and Details are required.");
-        return;
+                        if (res.success) {
+                            // Reload the modal content and detail list after a successful deletion
+                            loadExistingDetails(productId);
+                            $('#getAdvanceList').load('ajax/getAdvanceList.php', {
+                                productId: productId
+                            });
+                            // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
+                        }
+                    } catch (e) {
+                        console.error("Error parsing JSON response", e);
+                        alert('Unexpected response format');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error deleting detail:", error);
+                    alert("Error deleting detail. Please try again.");
+                }
+            });
+        }
     }
 
-    // AJAX request
-    $.ajax({
-        type: 'POST',
-        url: 'backend/addSpecs.php',
-        data: {
-            productId: productId, // PHP expects this parameter
-            specs: specs,
-            details: details
-        },
-        dataType: 'json', // Expecting JSON response from backend
-        success: function(response) {
-            if (response.success) {
-                loadExistingDetails(productId); // Reload existing details
-                $('#specsList').load('ajax/getSpecsList.php', { productId: productId }); // Refresh details list
-                $('#specificationForm')[0].reset(); // Reset the form
-            } else {
-                alert(response.message); // Display failure message
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("AJAX Error:", status, error); // Log error details for debugging
-            alert('Error submitting form. Please try again.');
+
+
+    function addSpecs() {
+        // Retrieve form values
+        var productId = document.getElementById("productId").value;
+        var details = document.getElementById("details").value;
+        var specs = document.getElementById("specs").value;
+
+        // Validate input values
+        if (!details || !specs) {
+            alert("Both Specs and Details are required.");
+            return;
         }
-    });
-}
 
-function deleteSpecs(specId, productId) {
-    if (confirm("Are you sure you want to delete this detail?")) {
+        // AJAX request
         $.ajax({
-            type: "POST",
-            url: "backend/deleteSpecs.php",
-            data: { specId: specId },
+            type: 'POST',
+            url: 'backend/addSpecs.php',
+            data: {
+                productId: productId, // PHP expects this parameter
+                specs: specs,
+                details: details
+            },
+            dataType: 'json', // Expecting JSON response from backend
             success: function(response) {
-                try {
-                    let res = JSON.parse(response);
-                    alert(res.message);
-
-                    if (res.success) {
-                        // Reload the modal content and detail list after a successful deletion
-                        loadExistingDetails(productId); // Reload existing details
-                        $('#specsList').load('ajax/getSpecsList.php', { productId: productId }); // Refresh details list
-                        // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
-                    }
-                } catch (e) {
-                    console.error("Error parsing JSON response", e);
-                    alert('Unexpected response format');
+                if (response.success) {
+                    loadExistingDetails(productId); // Reload existing details
+                    $('#specsList').load('ajax/getSpecsList.php', {
+                        productId: productId
+                    }); // Refresh details list
+                    $('#specificationForm')[0].reset(); // Reset the form
+                } else {
+                    alert(response.message); // Display failure message
                 }
             },
             error: function(xhr, status, error) {
-                console.error("Error deleting detail:", error);
-                alert("Error deleting detail. Please try again.");
+                console.error("AJAX Error:", status, error); // Log error details for debugging
+                alert('Error submitting form. Please try again.');
             }
         });
     }
-}
 
+    function deleteSpecs(specId, productId) {
+        if (confirm("Are you sure you want to delete this detail?")) {
+            $.ajax({
+                type: "POST",
+                url: "backend/deleteSpecs.php",
+                data: {
+                    specId: specId
+                },
+                success: function(response) {
+                    try {
+                        let res = JSON.parse(response);
+                        alert(res.message);
 
-function addFeature() {
-    // Retrieve form values
-    var productId = document.getElementById("productId").value;
-    var feature_text = document.getElementById("feature_text").value;
-
-    // Validate input values
-    if (!feature_text) {
-        alert("Both Specs and Details are required.");
-        return;
+                        if (res.success) {
+                            // Reload the modal content and detail list after a successful deletion
+                            loadExistingDetails(productId); // Reload existing details
+                            $('#specsList').load('ajax/getSpecsList.php', {
+                                productId: productId
+                            }); // Refresh details list
+                            // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
+                        }
+                    } catch (e) {
+                        console.error("Error parsing JSON response", e);
+                        alert('Unexpected response format');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error deleting detail:", error);
+                    alert("Error deleting detail. Please try again.");
+                }
+            });
+        }
     }
 
-    // AJAX request
-    $.ajax({
-        type: 'POST',
-        url: 'backend/addFeatures.php',
-        data: {
-            productId: productId, // PHP expects this parameter
-            feature_text: feature_text
-        },
-        dataType: 'json', // Expecting JSON response from backend
-        success: function(response) {
-            if (response.success) {
-                loadExistingDetails(productId); // Reload existing details
-                $('#featureList').load('ajax/getFeatureList.php', { productId: productId }); // Refresh details list
-                $('#featuresForm')[0].reset(); // Reset the form
-            } else {
-                alert(response.message); // Display failure message
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("AJAX Error:", status, error); // Log error details for debugging
-            alert('Error submitting form. Please try again.');
+
+    function addFeature() {
+        // Retrieve form values
+        var productId = document.getElementById("productId").value;
+        var feature_text = document.getElementById("feature_text").value;
+
+        // Validate input values
+        if (!feature_text) {
+            alert("Both Specs and Details are required.");
+            return;
         }
-    });
-}
 
-function deleteFeature(featureId, productId) {
-    if (confirm("Are you sure you want to delete this detail?")) {
+        // AJAX request
         $.ajax({
-            type: "POST",
-            url: "backend/deleteFeature.php",
-            data: { featureId: featureId },
+            type: 'POST',
+            url: 'backend/addFeatures.php',
+            data: {
+                productId: productId, // PHP expects this parameter
+                feature_text: feature_text
+            },
+            dataType: 'json', // Expecting JSON response from backend
             success: function(response) {
-                try {
-                    let res = JSON.parse(response);
-                    alert(res.message);
-
-                    if (res.success) {
-                        // Reload the modal content and detail list after a successful deletion
-                        loadExistingDetails(productId); // Reload existing details
-                        $('#featureList').load('ajax/getFeatureList.php', { productId: productId }); // Refresh details list
-                        // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
-                    }
-                } catch (e) {
-                    console.error("Error parsing JSON response", e);
-                    alert('Unexpected response format');
+                if (response.success) {
+                    loadExistingDetails(productId); // Reload existing details
+                    $('#featureList').load('ajax/getFeatureList.php', {
+                        productId: productId
+                    }); // Refresh details list
+                    $('#featuresForm')[0].reset(); // Reset the form
+                } else {
+                    alert(response.message); // Display failure message
                 }
             },
             error: function(xhr, status, error) {
-                console.error("Error deleting detail:", error);
-                alert("Error deleting detail. Please try again.");
+                console.error("AJAX Error:", status, error); // Log error details for debugging
+                alert('Error submitting form. Please try again.');
             }
         });
     }
-}
 
+    function deleteFeature(featureId, productId) {
+        if (confirm("Are you sure you want to delete this detail?")) {
+            $.ajax({
+                type: "POST",
+                url: "backend/deleteFeature.php",
+                data: {
+                    featureId: featureId
+                },
+                success: function(response) {
+                    try {
+                        let res = JSON.parse(response);
+                        alert(res.message);
 
-function addColor() {
-    // Retrieve form values
-    var productId = document.getElementById("productId").value;
-    var color = document.getElementById("color").value;
-
-    // Validate input values
-    if (!color) {
-        alert("colour is required.");
-        return;
+                        if (res.success) {
+                            // Reload the modal content and detail list after a successful deletion
+                            loadExistingDetails(productId); // Reload existing details
+                            $('#featureList').load('ajax/getFeatureList.php', {
+                                productId: productId
+                            }); // Refresh details list
+                            // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
+                        }
+                    } catch (e) {
+                        console.error("Error parsing JSON response", e);
+                        alert('Unexpected response format');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error deleting detail:", error);
+                    alert("Error deleting detail. Please try again.");
+                }
+            });
+        }
     }
 
-    // AJAX request
-    $.ajax({
-        type: 'POST',
-        url: 'backend/addColors.php',
-        data: {
-            productId: productId, // PHP expects this parameter
-            color: color
-        },
-        dataType: 'json', // Expecting JSON response from backend
-        success: function(response) {
-            if (response.success) {
-                loadExistingDetails(productId); // Reload existing details
-                $('#colorList').load('ajax/getColorList.php', { productId: productId }); // Refresh details list
-                $('#colorForm')[0].reset(); // Reset the form
-            } else {
-                alert(response.message); // Display failure message
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("AJAX Error:", status, error); // Log error details for debugging
-            alert('Error submitting form. Please try again.');
+
+    function addColor() {
+        // Retrieve form values
+        var productId = document.getElementById("productId").value;
+        var color = document.getElementById("color").value;
+
+        // Validate input values
+        if (!color) {
+            alert("colour is required.");
+            return;
         }
-    });
-}
 
-
-
-function deleteColor(colorId, productId) {
-    if (confirm("Are you sure you want to delete this detail?")) {
+        // AJAX request
         $.ajax({
-            type: "POST",
-            url: "backend/deleteColor.php",
-            data: { colorId: colorId },
+            type: 'POST',
+            url: 'backend/addColors.php',
+            data: {
+                productId: productId, // PHP expects this parameter
+                color: color
+            },
+            dataType: 'json', // Expecting JSON response from backend
             success: function(response) {
-                try {
-                    let res = JSON.parse(response);
-                    alert(res.message);
-
-                    if (res.success) {
-                        // Reload the modal content and detail list after a successful deletion
-                        loadExistingDetails(productId); // Reload existing details
-                        $('#colorList').load('ajax/getColorList.php', { productId: productId }); // Refresh details list
-                        // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
-                    }
-                } catch (e) {
-                    console.error("Error parsing JSON response", e);
-                    alert('Unexpected response format');
+                if (response.success) {
+                    loadExistingDetails(productId); // Reload existing details
+                    $('#colorList').load('ajax/getColorList.php', {
+                        productId: productId
+                    }); // Refresh details list
+                    $('#colorForm')[0].reset(); // Reset the form
+                } else {
+                    alert(response.message); // Display failure message
                 }
             },
             error: function(xhr, status, error) {
-                console.error("Error deleting detail:", error);
-                alert("Error deleting detail. Please try again.");
+                console.error("AJAX Error:", status, error); // Log error details for debugging
+                alert('Error submitting form. Please try again.');
             }
         });
     }
-}
 
 
-function addSize() {
-    // Retrieve form values
-    var productId = document.getElementById("productId").value;
-    var size = document.getElementById("size").value;
 
-    // Validate input values
-    if (!size) {
-        alert("size is required.");
-        return;
+    function deleteColor(colorId, productId) {
+        if (confirm("Are you sure you want to delete this detail?")) {
+            $.ajax({
+                type: "POST",
+                url: "backend/deleteColor.php",
+                data: {
+                    colorId: colorId
+                },
+                success: function(response) {
+                    try {
+                        let res = JSON.parse(response);
+                        alert(res.message);
+
+                        if (res.success) {
+                            // Reload the modal content and detail list after a successful deletion
+                            loadExistingDetails(productId); // Reload existing details
+                            $('#colorList').load('ajax/getColorList.php', {
+                                productId: productId
+                            }); // Refresh details list
+                            // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
+                        }
+                    } catch (e) {
+                        console.error("Error parsing JSON response", e);
+                        alert('Unexpected response format');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error deleting detail:", error);
+                    alert("Error deleting detail. Please try again.");
+                }
+            });
+        }
     }
 
-    // AJAX request
-    $.ajax({
-        type: 'POST',
-        url: 'backend/addSize.php',
-        data: {
-            productId: productId, // PHP expects this parameter
-            size: size
-        },
-        dataType: 'json', // Expecting JSON response from backend
-        success: function(response) {
-            if (response.success) {
-                loadExistingDetails(productId); // Reload existing details
-                $('#sizeList').load('ajax/getSizeList.php', { productId: productId }); // Refresh details list
-                $('#sizeForm')[0].reset(); // Reset the form
-            } else {
-                alert(response.message); // Display failure message
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("AJAX Error:", status, error); // Log error details for debugging
-            alert('Error submitting form. Please try again.');
+
+    function addSize() {
+        // Retrieve form values
+        var productId = document.getElementById("productId").value;
+        var size = document.getElementById("size").value;
+
+        // Validate input values
+        if (!size) {
+            alert("size is required.");
+            return;
         }
-    });
-}
 
-
-
-function deleteSize(sizeId, productId) {
-    if (confirm("Are you sure you want to delete this detail?")) {
+        // AJAX request
         $.ajax({
-            type: "POST",
-            url: "backend/deleteSize.php",
-            data: { sizeId: sizeId },
+            type: 'POST',
+            url: 'backend/addSize.php',
+            data: {
+                productId: productId, // PHP expects this parameter
+                size: size
+            },
+            dataType: 'json', // Expecting JSON response from backend
             success: function(response) {
-                try {
-                    let res = JSON.parse(response);
-                    alert(res.message);
-
-                    if (res.success) {
-                        // Reload the modal content and detail list after a successful deletion
-                        loadExistingDetails(productId); // Reload existing details
-                        $('#sizeList').load('ajax/getSizeList.php', { productId: productId }); // Refresh details list
-                        // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
-                    }
-                } catch (e) {
-                    console.error("Error parsing JSON response", e);
-                    alert('Unexpected response format');
+                if (response.success) {
+                    loadExistingDetails(productId); // Reload existing details
+                    $('#sizeList').load('ajax/getSizeList.php', {
+                        productId: productId
+                    }); // Refresh details list
+                    $('#sizeForm')[0].reset(); // Reset the form
+                } else {
+                    alert(response.message); // Display failure message
                 }
             },
             error: function(xhr, status, error) {
-                console.error("Error deleting detail:", error);
-                alert("Error deleting detail. Please try again.");
+                console.error("AJAX Error:", status, error); // Log error details for debugging
+                alert('Error submitting form. Please try again.');
             }
         });
     }
-}
 
 
-function toggleExpiryDate(show) {
-    document.getElementById("expiryDateContainer").style.display = show ? "block" : "none";
-}
 
-function addOffer() {
-    var productId = document.getElementById("productId").value;
-    var offer = document.getElementById("offer").value;
-    var hasExpiry = document.querySelector('input[name="hasExpiry"]:checked').value;
-    var expiryDate = hasExpiry === "yes" ? document.getElementById("expiryDate").value : null;
+    function deleteSize(sizeId, productId) {
+        if (confirm("Are you sure you want to delete this detail?")) {
+            $.ajax({
+                type: "POST",
+                url: "backend/deleteSize.php",
+                data: {
+                    sizeId: sizeId
+                },
+                success: function(response) {
+                    try {
+                        let res = JSON.parse(response);
+                        alert(res.message);
 
-    if (!offer) {
-        alert("Offer percentage is required.");
-        return;
-    }
-
-    if (hasExpiry === "yes" && !expiryDate) {
-        alert("Please enter an expiry date.");
-        return;
-    }
-
-    $.ajax({
-        type: "POST",
-        url: "backend/addOffer.php",
-        data: {
-            productId: productId,
-            offer: offer,
-            expiryDate: expiryDate
-        },
-        success: function(response) {
-            if (response == 200) {
-                loadExistingDetails(productId); // Reload existing details
-                $('#offerList').load('ajax/getOfferList.php', { productId: productId }); // Refresh details list
-                $('#offerForm')[0].reset(); // Reset the form
-            } else {
-                alert('somthing went wrong'); // Display failure message
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error("AJAX Error:", status, error); // Log error details for debugging
-            alert('Error submitting form. Please try again.');
+                        if (res.success) {
+                            // Reload the modal content and detail list after a successful deletion
+                            loadExistingDetails(productId); // Reload existing details
+                            $('#sizeList').load('ajax/getSizeList.php', {
+                                productId: productId
+                            }); // Refresh details list
+                            // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
+                        }
+                    } catch (e) {
+                        console.error("Error parsing JSON response", e);
+                        alert('Unexpected response format');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error deleting detail:", error);
+                    alert("Error deleting detail. Please try again.");
+                }
+            });
         }
-    });
-}
+    }
 
 
+    function toggleExpiryDate(show) {
+        document.getElementById("expiryDateContainer").style.display = show ? "block" : "none";
+    }
 
-function deleteOffer(offerId, productId) {
-    if (confirm("Are you sure you want to delete this detail?")) {
+    function addOffer() {
+        var productId = document.getElementById("productId").value;
+        var offer = document.getElementById("offer").value;
+        var hasExpiry = document.querySelector('input[name="hasExpiry"]:checked').value;
+        var expiryDate = hasExpiry === "yes" ? document.getElementById("expiryDate").value : null;
+
+        if (!offer) {
+            alert("Offer percentage is required.");
+            return;
+        }
+
+        if (hasExpiry === "yes" && !expiryDate) {
+            alert("Please enter an expiry date.");
+            return;
+        }
+
         $.ajax({
             type: "POST",
-            url: "backend/deleteOffer.php",
-            data: { offerId: offerId },
+            url: "backend/addOffer.php",
+            data: {
+                productId: productId,
+                offer: offer,
+                expiryDate: expiryDate
+            },
             success: function(response) {
-                try {
-                    let res = JSON.parse(response);
-                    alert(res.message);
-
-                    if (res.success) {
-                        // Reload the modal content and detail list after a successful deletion
-                        loadExistingDetails(productId); // Reload existing details
-                        $('#offerList').load('ajax/getOfferList.php', { productId: productId }); // Refresh details list
-                        // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
-                    }
-                } catch (e) {
-                    console.error("Error parsing JSON response", e);
-                    alert('Unexpected response format');
+                if (response == 200) {
+                    loadExistingDetails(productId); // Reload existing details
+                    $('#offerList').load('ajax/getOfferList.php', {
+                        productId: productId
+                    }); // Refresh details list
+                    $('#offerForm')[0].reset(); // Reset the form
+                } else {
+                    alert('somthing went wrong'); // Display failure message
                 }
             },
             error: function(xhr, status, error) {
-                console.error("Error deleting detail:", error);
-                alert("Error deleting detail. Please try again.");
+                console.error("AJAX Error:", status, error); // Log error details for debugging
+                alert('Error submitting form. Please try again.');
             }
         });
     }
-}
 
 
+
+    function deleteOffer(offerId, productId) {
+        if (confirm("Are you sure you want to delete this detail?")) {
+            $.ajax({
+                type: "POST",
+                url: "backend/deleteOffer.php",
+                data: {
+                    offerId: offerId
+                },
+                success: function(response) {
+                    try {
+                        let res = JSON.parse(response);
+                        alert(res.message);
+
+                        if (res.success) {
+                            // Reload the modal content and detail list after a successful deletion
+                            loadExistingDetails(productId); // Reload existing details
+                            $('#offerList').load('ajax/getOfferList.php', {
+                                productId: productId
+                            }); // Refresh details list
+                            // $('#advanceDetailForm')[0].reset(); // Uncomment if needed
+                        }
+                    } catch (e) {
+                        console.error("Error parsing JSON response", e);
+                        alert('Unexpected response format');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error deleting detail:", error);
+                    alert("Error deleting detail. Please try again.");
+                }
+            });
+        }
+    }
 </script>
