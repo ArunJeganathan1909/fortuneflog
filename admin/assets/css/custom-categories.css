@@ -174,7 +174,7 @@ textarea.form-control {
 }
 
 .table tbody tr:nth-child(even) {
-  background-color: #f2f2f2; /* Light Gray */
+  background-color: #f9f3f0; 
 }
 
 .table tbody td {

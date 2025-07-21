@@ -21,7 +21,7 @@ include 'layouts/header.php';
                         <div class="main-thumb">
                             <img src="assets/images/banner/Anqique_collection.jpg" alt="Antique Product">
                         </div>
-                        <div class="banner-product">
+                        <!-- <div class="banner-product">
                             <div class="product-details">
                                 <h4 class="title"><a href="single-product-8.php">Discover Unique Pcs here</a></h4>
                                 <div class="price"> $25.00 - $50.00 (sample) </div>
@@ -39,7 +39,7 @@ include 'layouts/header.php';
                             <div class="plus-icon">
                                 <i class="far fa-plus"></i>
                             </div>
-                        </div>
+                        </div> -->
                         <ul class="shape-group">
                             <li class="shape-1">
                                 <svg width="717" height="569" viewBox="0 0 717 569" fill="none" xmlns="http://www.w3.org/2000/svg">
